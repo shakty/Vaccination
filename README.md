@@ -15,13 +15,13 @@ The Covid-pandemic and the hope for a vaccine are on everyone's mind. The questi
 *Infection Rate*: Number of people an infected person infects on average.
 
 #### Hypotheses:
-H1: If the percentage of the vaccinated population increases up to a certain point, more individuals decide in favor of vaccination. From then on, the relationship turns negative (i.e. the more people are vaccinated, the fewer individuals decide in favor of vaccination).
+*H1:* If the percentage of the vaccinated population increases up to a certain point, more individuals decide in favor of vaccination. From then on, the relationship turns negative (i.e. the more people are vaccinated, the fewer individuals decide in favor of vaccination).
 
-H2: If the infection rate is high, more people will get vaccinated.
+*H2:* If the infection rate is high, more people will get vaccinated.
 
-H3a: If the percentage of vaccinated people is high and the infection rate is low, less people will decide in favor of vaccination.
+*H3a:* If the percentage of vaccinated people is high and the infection rate is low, less people will decide in favor of vaccination.
 
-H3b: If the percentage of vaccinated people is low and infection is high, more people will decide in favor of vaccination.
+*H3b:* If the percentage of vaccinated people is low and infection is high, more people will decide in favor of vaccination.
 
 #### Approach:
 - create an online survey in which people will be asked for some demographic details
