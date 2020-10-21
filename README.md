@@ -1,7 +1,7 @@
 # Vaccination
 
 ### Team Members: 
-Kerem Ecerit, Azim Selvi, Lea Cohausz
+Kerem Cerit, Azim Selvi, Lea Cohausz
 
 #### Research Question: 
 Does the percentage of the population already vaccinated and the infection rate of a virus influence people regarding their decision towards vaccination?
