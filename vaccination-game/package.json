@@ -1,0 +1,8 @@
+{
+    "name": "vaccination-game",
+    "version": "0.0.1",
+    "description": "A single-player decision game.",
+    "author": "KLC <->",
+    "license": "MIT/X11",
+    "homepage": "http://nodegame.org"
+}
