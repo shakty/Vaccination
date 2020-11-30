@@ -1,4 +1,4 @@
-/**
+**
  * # Player type implementation of the game stages
  * Copyright(c) 2020 KLC <->
  * MIT Licensed
@@ -244,11 +244,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     selectMultiple: true,
                     mainText: 'Do you identify with any ' +
                         'of the following races/ethnic groups?',
-                    choices: [ 'White', 'African American',
-                               'Latino', 'Asian',
-                               'American Indian',
-                               'Alaska Native',
-                               'Native Hawaiian', 'Pacific Islander' ]
+                    choices: [ 'White', 'Black',
+                               'Latino', 'Asian' ]
                 },
                 {
                     name: 'ChoiceTable',
@@ -259,6 +256,104 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     hidden: false,
                     shuffleChoices: false
                 },
+                {
+                    name: "ChoiceTable",
+                    id: "MaritalStatus",
+                    mainText: "With how many Family members do you interact with on a weekly basis?",
+                    choices: [
+                        "0",
+                        "1",
+                        "2 or 3",
+                        "4 or 5",
+                        "6 or more",
+                        "Other"],
+                        hidden: false,
+                        shuffleChoices: false
+                },
+                {
+                    name: "ChoiceTable",
+                    id: "Education",
+                    mainText: "What is the highest degree or level of education you have completed?",
+                    choices: [
+                        "No educational degree",
+                        "Primary School",
+                        "High School",
+                        "Bachelor's Degree",
+                        "Master's Degree",
+                        "Ph.D. or higher",
+                        "Trade School",
+                        "Prefer not to say"
+                    ],
+                    hidden: false,
+                    shuffleChoices: false
+                },
+                {
+                    name: "ChoiceTable",
+                    id: "Country of Origin",
+                    mainText: "Where were you born?",
+                    choices: [
+                        "Asia",
+                        "Africa",
+                        "Central America",
+                        "Europe",
+                        "North America",
+                        "Oceania",
+                        "South America",
+                        "Other",
+                        "Prefer not to say"
+                    ],
+                    hidden: false,
+                    shuffleChoices: false
+                },
+                {
+                    name: "ChoiceTable",
+                    id: "Income",
+                    mainText: "Here are different levels of income. We would like to know in what group you would place yourself, counting all wages, salaries, pensions and other incomes that come in.",
+                    choices: [
+                        "No income",
+                        "Lower income level",
+                        "Middle underclass income level",
+                        "Middle income level",
+                        "Middle upperclass income level",
+                        "Upper income level",
+                        "Prefer not to say"
+                    ],
+                    hidden: false,
+                    shuffleChoices: false
+                },
+                {
+                    name: "ChoiceTable",
+                    id: "Occupation",
+                    mainText: "Which of the following best describes your current occupation?",
+                    choices: [
+                        "Management Occupations",
+                        "Sales and Related Occupations",
+                        "Building and Grounds Cleaning and Maintenance Occupations",
+                        "Personal Care and Service Occupations",
+                        "Arts, Design, Entertainment, Sports, and Media Occupations",
+                        "Architecture and Engineering Occupations",
+                        "Community and Social Service Occupations",
+                        "Education, Training, and Library Occupations",
+                        "Protective Service Occupations",
+                        "Construction and Extraction Occupations",
+                        "Farming, Fishing, and Forestry Occupations",
+                        "Healthcare Support Occupations",
+                        "Office and Administrative Support Occupations",
+                        "Life, Physical, and Social Science Occupations",
+                        "Legal Occupations",
+                        "Food Preparation and Serving Related Occupations",
+                        "Production Occupations",
+                        "Installation, Maintenance, and Repair Occupations",
+                        "Computer and Mathematical Occupations",
+                        "Business and Financial Operations Occupations",
+                        "Transportation and Materials Moving Occupations",
+                        "Healthcare Practitioners and Technical Occupations",
+                        "Other",
+                        "Prefer not to say"
+                    ],
+                    hidden: false,
+                    shuffleChoices: false
+                }
               ],
               formsOptions: {
                 requiredChoice: true,
@@ -273,38 +368,54 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('politics', {
 
       cb: function() {
-        W.setInnerHTML('pagetitle', 'Survey: Your Political Persona');
+        W.setInnerHTML('pagetitle', 'Survey: Your Social and Political Persona');
         W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
         W.cssRule('.choicetable-left, .choicetable-right ' +
                   '{ width: 200px !important; }');
         parent.scrollTo(0,0);
     },
     widget: {
-        name: 'ChoiceManager',
+        name: 'ChoiceTable',
         id: 'pol',
         options: {
-            mainText: 'Your political orientation.',
+            mainText: 'A few more questions and we are done.',
             forms: [
                 {
                     name: 'ChoiceTable',
-                    id: 'followpol',
-                    mainText: 'On a scale from 1 to 7, where 1 means ' +
-                        '"not at all" and 7 means "very closely," how ' +
-                        'closely do you follow US politics?',
-                    choices: [1,2,3,4,5,6,7],
-                    left: 'Not at all',
-                    right: 'Very closely'
+                    id: 'Community Service',
+                    mainText: "Have you been a volunteer in the last 12 months for any social or community service and if yes, how often have you carried out this volunteering within the past 12 months?",
+                    choices: [
+                        "I did not volunteer in the last 12 months",
+                        "Very ocassionally",
+                        "A couple of times last year",
+                        "One or two days a month",
+                        "One day a week or more",
+                    ],
+                    hidden: false,
+                    shuffleChoices: false
+                }
                 },
-                {
-                    name: 'ChoiceTable',
-                    id: 'demrep',
-                    mainText: 'On a scale from 1 to 7, where 1 means ' +
-                        '"strong Democrat" and 7 means "strong ' +
-                        'Republican," where do you position yourself?',
-                    choices: [1,2,3,4,5,6,7],
-                    left: 'Democratic',
-                    right: 'Republican'
-                },
+                widget: {
+                    name: 'ChoiceTableGroup',
+                    id: 'confidence',
+                  options:  {
+                    id: 'confidence',
+                    mainText: 'I am going to name a number of organizations. For each one, could you tell me how much confidence you have in them?',
+                    items: [
+                        'The government (in your nation’s capital)',
+                        'Political Parties',
+                        'Parliament',
+                        'Major Companies'],
+                        choices: [ "A great deal",
+                                    "Quite a lot",
+                                    "Not very much",
+                                    "None at all",
+                                    "Prefer not to say"],
+                                    shuffleItems: false,
+                                    requiredChoice: true,
+                                    left: 'Lowest',
+                                    right: 'Highest'
+                                },
                 {
                     name: 'ChoiceTable',
                     id: 'libcons',
@@ -328,50 +439,31 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
     stager.extendStep('risk', {
-      /////////////////////////////////////////////////////////////
-      // nodeGame hint: the widget property
-      //
-      // It is a shortcut to create widget-steps.
-      //
-      // In a widget-step, the following operations are performed:
-      //
-      //   1- The widget is loaded, possibly appended. If no frame
-      //      is specified, the default page
-      //      '/pages/default.html' will be loaded.
-      //   2- Upon `node.done`, the current values of the widget
-      //      are validated, and if valid, and not timeup will be
-      //      sent to server.
-      //   3- Upon exiting the step, the widget will be destroyed.
-      //
-      // As a string, it just includes the name of the widget:
-      //
-      // ```
-      // widget: 'MoodGauge'
-      // ```
-      //
-      // As an object, additional options can be set:
-      //
-      // ```
-      // widget: {
-      //     name: 'MoodGauge',
-      //     id: 'myid',
-      //     ref: 'myref', // It will be added as node.game[ref]
-      //     options: { ... }, // Options passed to `node.widgets.append()`
-      //     append: false,
-      //     checkAnswers: false,
-      //     root: ...
-      //     destroyOnExit: false
-      // }
-      // ```
-      //////
-      widget: {
-          name: 'RiskGauge',
-          options: {
-              panel: false,
-              title: false
-          }
-      }
-  });
+	widget: {
+	name: 'RiskGauge',
+	root: 'container',
+    id: "Risk",
+		 options: {
+             method: 'Bomb',
+             title: false,
+             probBomb: 0.5,
+             revealProbBomb: true,
+             totBoxes: 50,
+             maxBoxes: 25,
+            }
+		}
+	 });
+
+//      risk.getValues();
+
+//      {
+//          value: 34,        // number of boxes opened.
+//          isCorrect: true,  // TRUE, if the user has clicked on the 'Open boxes' button
+//          isWinner: false,  // TRUE, if the user did not find the bomb after clicking on the 'Open boxes' button.
+//          reward: 0,        // Total reward for the user.
+//          time: 4444609,    // Time in milliseconds from the creation of the widget
+//          totalMove: 57    // Total movement of the slider.
+//      }
 
 
 
