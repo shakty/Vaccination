@@ -1,7 +1,7 @@
 # Vaccination
 
 ### Team Members: 
-Kerem Ecerit, Azim Selvi, Lea Cohausz
+Kerem Cerit, Azim Selvi, Lea Cohausz
 
 #### Research Question: 
 Does the percentage of the population already vaccinated and the infection rate of a virus influence people regarding their decision towards vaccination?
@@ -29,3 +29,7 @@ The Covid-pandemic and the hope for a vaccine are on everyone's mind. The questi
 - but we vary the disease's infection rate (preliminary values: 0.1, 0.5, 1, 5, 20) and the percentage of the already vaccinated population (preliminary values: 5%, 23%, 51%, 72%, 95%)
 - and ask particpants whether they would get vaccinated
 - and why they decided as they did
+
+#### Example Text
+In your country a virus breaked out which has an infection rate of 5. This means that every infected person on average infects 5 people. It leads to the following symptoms: fever, coughing, nausea, vomiting and has a death rate of 2%. A vaccine exists that already has been given to 23 percent of the population. Would you take the vaccine?
+
