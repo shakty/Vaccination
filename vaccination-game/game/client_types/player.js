@@ -22,18 +22,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     let quizTextA = {
 
       mainText:
-          'Which one of the choices below is one of the symptoms of the desease ?',
+          'Which one of the choices below is one of the symptoms of the disease?',
       choices: [
-          'fever',
-          'paralysis',
-          'leg pain'
+          'Fever',
+          'Paralysis',
+          'Leg pain'
       ],
     }
 
     let quizTextO = {
 
       mainText:
-          'What is the infection rate of the desease ?',
+          'What is the infection rate of the disease ?',
       choices: [
           settings.infectRate,
           0.5,
@@ -73,6 +73,37 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // this.debugInfo = node.widgets.append('DebugInfo', header)
     });
 
+    stager.extendStep('introduction', {
+            frame: 'introduction.htm'
+        });
+
+
+    stager.extendStep('desease', {
+            frame: 'disease.htm',
+            widget: {
+                name: 'ChoiceManager',
+                id: 'disease',
+                options: {
+                    mainText: 'Answer the following question to check ' +
+                              'your understanding of the terms.',
+                    forms: [
+                        {
+                            name: 'ChoiceTable',
+                            id: 'infectionRate',
+                            mainText: 'What does an infection rate of 5 mean?',
+                            choices: [ "There are 5 infected people.", "Every infected person infects 5 others on average.", "5% of the population are infected."],
+                            correctChoice: 1
+                        },
+                    ],
+
+                    formsOptions: {
+                        requiredChoice: true,
+                        shuffleChoices: true
+                    }
+                }
+            }
+        });
+
     stager.extendStep('instructions', {
         frame: 'instructions.htm',
         cb: function() {
@@ -90,11 +121,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
 
-    stager.extendStep('desease', {
-        frame: settings.scenario,
-
-    });
-
+    //stager.extendStep('desease', {
+    //    frame: settings.scenario,
+//
+    //});
 
 
 
@@ -120,7 +150,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     {
                         name: 'ChoiceTable',
                         id: 'deathRate',
-                        mainText: 'What is the death rate of the desease ?',
+                        mainText: 'What is the death rate of the disease ?',
                         choices: [ 1, 2, 5, 10 ],
                         correctChoice: 1
                     },
@@ -151,10 +181,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             options: {
                 id: 'vac',
                 mainText:
-                'There is a vaccine exists that already proven effective against' +
-                'the desease. This vaccine has already been given to ' +
+                'A vaccine exists that already proven effective against' +
+                'the disease. This vaccine has already been given to ' +
                   settings.popRate[3] + ' of the population. ' +
-                '<br> <br> Will you vaccinate ? <br>',
+                '<br> <br> Will you vaccinate? <br>',
                 choices: [ 'Vaccinate', 'Not Vaccinate' ],
                 requiredChoice: true,
                 shuffleChoices: true,
@@ -185,7 +215,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         options: {
             title: false,
             panel: false,
-            mainText: 'Can you shortly explain why you make this decision ? <br> <br>',
+            mainText: 'Can you briefly explain why you make this decision ? <br> <br>',
             sent: 'send',
             id: 'opend',
             requiredChoice: true,
@@ -259,7 +289,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 {
                     name: "ChoiceTable",
                     id: "MaritalStatus",
-                    mainText: "With how many Family members do you interact with on a weekly basis?",
+                    mainText: "With how many family members do you interact with on a weekly basis?",
                     choices: [
                         "0",
                         "1",
@@ -421,7 +451,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     id: 'libcons',
                     mainText: 'On a scale from 1 to 7, where 1 means ' +
                         '"very liberal" and 7 means "very ' +
-                        'conservative," where do you position yourself?',
+                        'conservative" where do you position yourself?',
                     choices: [1,2,3,4,5,6,7],
                     left: 'Liberal',
                     right: 'Conservative'

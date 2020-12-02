@@ -12,6 +12,7 @@
 module.exports = function(stager, settings) {
 
      stager
+        .next('introduction')
         .next('instructions')
         .next('desease')
         .next('quiz')
