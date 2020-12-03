@@ -1,4 +1,4 @@
-**
+/****
  * # Player type implementation of the game stages
  * Copyright(c) 2020 KLC <->
  * MIT Licensed
@@ -104,20 +104,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             }
         });
 
-    stager.extendStep('instructions', {
-        frame: 'instructions.htm',
-        cb: function() {
-            var s;
-            // Note: we need to specify node.game.settings,
-            // and not simply settings, because this code is
-            // executed on the client.
-            s = node.game.settings;
-            // Replace variables in the instructions.
+
+
             W.setInnerHTML('coins', s.COINS);
             W.setInnerHTML('rounds', s.ROUNDS);
             W.setInnerHTML('exchange-rate', (s.COINS * s.EXCHANGE_RATE));
-        }
-    });
+
 
 
 
@@ -270,15 +262,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 },
                 {
                     name: 'ChoiceTable',
-                    id: 'race',
-                    selectMultiple: true,
-                    mainText: 'Do you identify with any ' +
-                        'of the following races/ethnic groups?',
-                    choices: [ 'White', 'Black',
-                               'Latino', 'Asian' ]
-                },
-                {
-                    name: 'ChoiceTable',
                     id: 'agegroup',
                     mainText: 'What is your age group?',
                     choices: [ '18-19', '20-29', '30-39', '40-49',
@@ -295,8 +278,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         "1",
                         "2 or 3",
                         "4 or 5",
-                        "6 or more",
-                        "Other"],
+                        "6 or more"],
                         hidden: false,
                         shuffleChoices: false
                 },
@@ -308,6 +290,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         "No educational degree",
                         "Primary School",
                         "High School",
+                        "Vocational training",
                         "Bachelor's Degree",
                         "Master's Degree",
                         "Ph.D. or higher",
@@ -322,7 +305,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     id: "Country of Origin",
                     mainText: "Where were you born?",
                     choices: [
-                        "Asia",
+                        "East Asia",
+                        "Middle East",
                         "Africa",
                         "Central America",
                         "Europe",
