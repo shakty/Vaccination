@@ -1,4 +1,4 @@
-/****
+/**
  * # Player type implementation of the game stages
  * Copyright(c) 2020 KLC <->
  * MIT Licensed
@@ -14,11 +14,16 @@
 "use strict";
 
 const ngc = require('nodegame-client');
+const J = ngc.JSUS;
 
 module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
+    let channel = gameRoom.channel;
+    let node = gameRoom.node;
 
+
+    settings.popRate = J.shuffle(settings.popRate);
     let quizTextA = {
 
       mainText:
@@ -74,50 +79,76 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('introduction', {
-            frame: 'introduction.htm'
+            frame: 'introduction.htm',
+            cb: function() {
+            var s;
+            // Note: we need to specify node.game.settings,
+            // and not simply settings, because this code is
+            // executed on the client.
+            s = node.game.settings;
+            // Replace variables in the instructions.
+            W.setInnerHTML('coins', s.COINS);
+            W.setInnerHTML('exchange-rate', (s.COINS * s.EXCHANGE_RATE));
+        }
         });
+
 
 
     stager.extendStep('desease', {
-            frame: 'disease.htm',
-            widget: {
-                name: 'ChoiceManager',
-                id: 'disease',
-                options: {
-                    mainText: 'Answer the following question to check ' +
-                              'your understanding of the terms.',
-                    forms: [
-                        {
-                            name: 'ChoiceTable',
-                            id: 'infectionRate',
-                            mainText: 'What does an infection rate of 5 mean?',
-                            choices: [ "There are 5 infected people.", "Every infected person infects 5 others on average.", "5% of the population are infected."],
-                            correctChoice: 1
-                        },
-                    ],
+          frame: 'disease.htm',
+          cb: function() {
+          var options;
 
-                    formsOptions: {
-                        requiredChoice: true,
-                        shuffleChoices: true
-                    }
-                }
+          options = {
+              id: 'disease',
+              title: false,
+              mainText: 'Answer the following question to check ' +
+                        'your understanding of the terms.',
+              choices: [ "There are 5 infected people.",
+              "Every infected person infects 5 others on average.",
+              "5% of the population are infected."] ,
+              correctChoice: 1,
+              shuffleChoices: true,
+              orientation: 'v',
+              className: 'centered'
+
+          };
+
+
+          /////////////////////////////////////////////////////////////
+          // nodeGame hint: the widget collection
+          //
+          // Widgets are re-usable components with predefined methods,
+          // such as: hide, highlight, disable, getValues, etc.
+          ////////////////////////////////////////////////////////////////
+          this.quest = node.widgets.append('ChoiceTable',
+                                           W.gid('quiz'),
+                                           options);
+
+          W.cssRule('.choicetable-left, .choicetable-right ' +
+                    '{ width: 200px !important; }');
+
+      },
+
+      done: function() {
+            var answers, isTimeup;
+            answers = this.quest.getValues();
+            isTimeup = node.game.timer.isTimeup();
+            if (!answers.choice && !isTimeup) {
+                this.quest.highlight();
+                return false;
             }
-        });
-
-
-
-            W.setInnerHTML('coins', s.COINS);
-            W.setInnerHTML('rounds', s.ROUNDS);
-            W.setInnerHTML('exchange-rate', (s.COINS * s.EXCHANGE_RATE));
+            return answers;
+        }
+      });
 
 
 
 
-    //stager.extendStep('desease', {
-    //    frame: settings.scenario,
-//
-    //});
+    stager.extendStep('treat', {
+                frame: settings.scenario,
 
+            });
 
 
 
@@ -166,6 +197,22 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('vaccination', {
+        frame: 'popVac.htm',
+        cb: function() {
+
+          var s;
+          var r;
+          s = node.game.settings;
+          r = node.game.getRound();
+
+          // Replace variables in the instructions.
+          W.setInnerHTML('popRate', s.popRate[r-1]);
+          W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
+          W.cssRule('.choicetable-left, .choicetable-right ' +
+                    '{ width: 200px !important; }');
+
+
+        },
 
         widget: {
             name: 'ChoiceTable',
@@ -173,10 +220,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             options: {
                 id: 'vac',
                 mainText:
-                'A vaccine exists that already proven effective against' +
-                'the disease. This vaccine has already been given to ' +
-                  settings.popRate[3] + ' of the population. ' +
-                '<br> <br> Will you vaccinate? <br>',
+                '<br> <br> Will you vaccinate? <br>' ,
                 choices: [ 'Vaccinate', 'Not Vaccinate' ],
                 requiredChoice: true,
                 shuffleChoices: true,
@@ -191,7 +235,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
     });
 
-    stager.extendStep('opend', {
+    stager.extendStep('response', {
         frame: 'vac.htm',
         cb: function() {
             // Ask for the outcome to server.
@@ -201,7 +245,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     'vaccinate' : 'not vaccinate');
 
             });
-        },
+        }
+    });
+
+    stager.extendStep('opend', {
+      cb: function() {
+        W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
+        W.cssRule('.choicetable-left, .choicetable-right ' +
+                  '{ width: 200px !important; }');
+        parent.scrollTo(0,0);
+    },
         widget: {
         name: 'Feedback',
         options: {
@@ -213,14 +266,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             requiredChoice: true,
             rows: 5,
             showSubmit: false,
-
+            width: "100%"
         }
     }
     });
 
     stager.extendStep('demographics', {
       cb: function() {
-        W.setInnerHTML('pagetitle', 'Survey: Demographics');
         W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
         W.cssRule('.choicetable-left, .choicetable-right ' +
                   '{ width: 200px !important; }');
@@ -322,7 +374,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 {
                     name: "ChoiceTable",
                     id: "Income",
-                    mainText: "Here are different levels of income. We would like to know in what group you would place yourself, counting all wages, salaries, pensions and other incomes that come in.",
+                    mainText: "Here are different levels of income. We would " +
+                    "like to know in what group you would place yourself, " +
+                    "counting all wages, salaries, pensions and other incomes that come in.",
                     choices: [
                         "No income",
                         "Lower income level",
@@ -366,7 +420,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         "Prefer not to say"
                     ],
                     hidden: false,
-                    shuffleChoices: false
+                    shuffleChoices: false,
+                    orientation: 'V'
                 }
               ],
               formsOptions: {
@@ -388,6 +443,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                   '{ width: 200px !important; }');
         parent.scrollTo(0,0);
     },
+
     widget: {
         name: 'ChoiceTable',
         id: 'pol',
@@ -397,7 +453,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 {
                     name: 'ChoiceTable',
                     id: 'Community Service',
-                    mainText: "Have you been a volunteer in the last 12 months for any social or community service and if yes, how often have you carried out this volunteering within the past 12 months?",
+                    mainText: "Have you been a volunteer in the last 12 months"+
+                    " for any social or community service and if yes, " +
+                    " how often have you carried out this volunteering " +
+                    "within the past 12 months?",
                     choices: [
                         "I did not volunteer in the last 12 months",
                         "Very ocassionally",
@@ -407,14 +466,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     ],
                     hidden: false,
                     shuffleChoices: false
-                }
                 },
-                widget: {
+                {
                     name: 'ChoiceTableGroup',
                     id: 'confidence',
                   options:  {
                     id: 'confidence',
-                    mainText: 'I am going to name a number of organizations. For each one, could you tell me how much confidence you have in them?',
+                    mainText: "I am going to name a number of organizations." +
+                    " For each one, could you tell me how much confidence" +
+                    " you have in them?",
                     items: [
                         'The government (in your nation’s capital)',
                         'Political Parties',
@@ -430,6 +490,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                                     left: 'Lowest',
                                     right: 'Highest'
                                 },
+                },
                 {
                     name: 'ChoiceTable',
                     id: 'libcons',
@@ -448,16 +509,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             className: 'centered'
         }
     }
-});
+    });
 
 
 
-    stager.extendStep('risk', {
+
+
+stager.extendStep('risk', {
 	widget: {
 	name: 'RiskGauge',
 	root: 'container',
     id: "Risk",
-		 options: {
+	options: {
              method: 'Bomb',
              title: false,
              probBomb: 0.5,
@@ -466,7 +529,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
              maxBoxes: 25,
             }
 		}
-	 });
+	});
 
 //      risk.getValues();
 
