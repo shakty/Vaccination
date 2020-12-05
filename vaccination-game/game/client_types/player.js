@@ -94,25 +94,25 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
 
-    stager.extendStep('desease', {
-          frame: 'disease.htm',
-          cb: function() {
-          var options;
+    //stager.extendStep('desease', {
+      //    frame: 'disease.htm',
+      //    cb: function() {
+      //    var options;
 
-          options = {
-              id: 'disease',
-              title: false,
-              mainText: 'Answer the following question to check ' +
-                        'your understanding of the terms.',
-              choices: [ "There are 5 infected people.",
-              "Every infected person infects 5 others on average.",
-              "5% of the population are infected."] ,
-              correctChoice: 1,
-              shuffleChoices: true,
-              orientation: 'v',
-              className: 'centered'
+      //    options = {
+      //        id: 'disease',
+      //        title: false,
+      //        mainText: 'Answer the following question to check ' +
+      //                  'your understanding of the terms.',
+      //        choices: [ "There are 5 infected people.",
+      //        "Every infected person infects 5 others on average.",
+      //        "5% of the population are infected."] ,
+      //        correctChoice: 1,
+      //        shuffleChoices: true,
+      //        orientation: 'v',
+      //        className: 'centered'
 
-          };
+      //    };
 
 
           /////////////////////////////////////////////////////////////
@@ -121,26 +121,57 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           // Widgets are re-usable components with predefined methods,
           // such as: hide, highlight, disable, getValues, etc.
           ////////////////////////////////////////////////////////////////
-          this.quest = node.widgets.append('ChoiceTable',
-                                           W.gid('quiz'),
-                                           options);
+      //    this.quest = node.widgets.append('ChoiceTable',
+      //                                     W.gid('quiz'),
+      //                                     options);
 
-          W.cssRule('.choicetable-left, .choicetable-right ' +
-                    '{ width: 200px !important; }');
+      //    W.cssRule('.choicetable-left, .choicetable-right ' +
+      //              '{ width: 200px !important; }');
 
-      },
+    //  },
 
-      done: function() {
-            var answers, isTimeup;
-            answers = this.quest.getValues();
-            isTimeup = node.game.timer.isTimeup();
-            if (!answers.choice && !isTimeup) {
-                this.quest.highlight();
-                return false;
-            }
-            return answers;
-        }
-      });
+    //  done: function() {
+    //        var answers, isTimeup;
+    //        answers = this.quest.getValues();
+    //        isTimeup = node.game.timer.isTimeup();
+    //        if (!answers.choice && !isTimeup) {
+    //            this.quest.highlight();
+    //            return false;
+    //        }
+    //        return answers;
+    //    }
+  //    });
+
+      stager.extendStep('desease', {
+              frame: 'disease.htm',
+              widget: {
+                  name: 'ChoiceManager',
+                  id: 'disease',
+                  options: {
+                      forms: [
+                          {
+                              name: 'ChoiceTable',
+                              id: 'infectionRate',
+                              mainText: '<br>What does an infection rate of 5 mean?  <br><br>',
+                              choices: [ "There are 5 infected people.",
+                              "Every infected person infects 5 others on average.",
+                              "5% of the population are infected."],
+                              correctChoice: 1
+                          },
+                      ],
+
+                      formsOptions: {
+                          requiredChoice: false,
+                          shuffleChoices: true,
+                          orientation: 'v',
+                      },
+
+                      className: 'centered',
+                      panel: false,
+
+                  }
+              }
+          });
 
 
 
@@ -215,18 +246,17 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         },
 
         widget: {
-            name: 'ChoiceTable',
-            ref: 'vac',
-            options: {
-                id: 'vac',
-                mainText:
-                '<br> <br> Will you vaccinate? <br>' ,
-                choices: [ 'Vaccinate', 'Not Vaccinate' ],
-                requiredChoice: true,
-                shuffleChoices: true,
-                panel: false,
-                title: false
-            }
+          name: 'ChoiceTable',
+          ref:'vac',
+          options: {
+            id: 'vac',
+            mainText: ' Will you vaccinate? ' ,
+            choices: [ 'Vaccinate', 'Not Vaccinate' ],
+            requiredChoice: true,
+            shuffleChoices: true,
+            panel: false,
+            title: false
+          }
         },
         done: function(values) {
             return {
