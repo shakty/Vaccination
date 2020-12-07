@@ -1,4 +1,4 @@
-/**
+**
  * # Player type implementation of the game stages
  * Copyright(c) 2020 KLC <->
  * MIT Licensed
@@ -69,6 +69,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             hidden: true // Initially hidden.
         });
         this.doneButton = node.widgets.append('DoneButton', header);
+        this.backButton = document.createElement('input');          // maybe this is how we can install a back button
+        this.backButton.setAttribute('type', 'button');
+        this.backButton.setAttribute('id', 'backbutton');
+        this.backButton.setAttribute('class', 'btn btn-lg btn-secondary');
+        this.backButton.setAttribute('value', 'Back');
+        this.backButton.onclick = function(){
+            var curStage = node.game.getCurrentGameStage();
+            var stepId = curStage.step;
+            if(stepId > 1){
+                curStage.step = curStage.step-1;
+                node.game.gotoStep(curStage);
+            }
 
         // No need to show the wait for other players screen in single-player
         // games.
@@ -301,6 +313,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     }
     });
 
+
     stager.extendStep('demographics', {
       cb: function() {
         W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
@@ -449,9 +462,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         "Other",
                         "Prefer not to say"
                     ],
+                    orientation: "V",
                     hidden: false,
                     shuffleChoices: false,
-                    orientation: 'V'
                 }
               ],
               formsOptions: {
@@ -467,7 +480,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('politics', {
 
       cb: function() {
-        W.setInnerHTML('pagetitle', 'Survey: Your Social and Political Persona');
         W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
         W.cssRule('.choicetable-left, .choicetable-right ' +
                   '{ width: 200px !important; }');
@@ -476,15 +488,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     widget: {
         name: 'ChoiceTable',
-        id: 'pol',
+        ref: 'poli',
         options: {
+            id: "pol",
             mainText: 'A few more questions and we are done.',
             forms: [
                 {
                     name: 'ChoiceTable',
                     id: 'Community Service',
                     mainText: "Have you been a volunteer in the last 12 months"+
-                    " for any social or community service and if yes, " +
+                    " for any social or community service and if yes," +
                     " how often have you carried out this volunteering " +
                     "within the past 12 months?",
                     choices: [
@@ -549,15 +562,15 @@ stager.extendStep('risk', {
 	widget: {
 	name: 'RiskGauge',
 	root: 'container',
-    id: "Risk",
+    id: "risk",
 	options: {
              method: 'Bomb',
              title: false,
              probBomb: 0.5,
-             revealProbBomb: true,
+            revealProbBomb: true,
              totBoxes: 50,
              maxBoxes: 25,
-            }
+           }
 		}
 	});
 
