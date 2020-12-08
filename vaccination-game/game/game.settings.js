@@ -30,9 +30,8 @@ module.exports = {
      */
     TIMER: {
       instructions: 50000,
-      treatment: 50000,
+      treat: 50000,
       quiz: 50000,
-      guess: 50000,
       demographics: 50000,
       politics: 50000,
       risk: 50000
@@ -50,7 +49,7 @@ module.exports = {
     EXCHANGE_RATE: 1,
 
     // Rate of Vaccinated population.
-    popRate: [0,"<b>5%<b>", "<b>23%<b>", "<b>51%<b>", "<b>72%<b>", "<b>90%<b>"],
+    popRate:["<b>5%<b>", "<b>23%<b>", "<b>51%<b>", "<b>72%<b>", "<b>90%<b>"],
 
     // # Treatments definition.
 

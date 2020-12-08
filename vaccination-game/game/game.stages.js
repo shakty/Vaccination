@@ -13,12 +13,13 @@ module.exports = function(stager, settings) {
 
      stager
         .next('introduction')
-        .next('instructions')
         .next('desease')
+        .next('treat')
         .next('quiz')
         .repeat('game', settings.ROUNDS)
         .step('vaccination')
-        .step('opend')
+        .step('response')
+        .next('opend')
         .next('demographics')
         .next('politics')
         .next('risk')
