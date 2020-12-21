@@ -11,7 +11,7 @@
 
 module.exports = function(stager, settings) {
 
-     stager
+    stager
         .next('introduction')
         .next('desease')
         .next('treat')
@@ -22,6 +22,7 @@ module.exports = function(stager, settings) {
         .next('opend')
         .next('demographics')
         .next('politics')
+        .next("health")
         .next('risk')
         .next('end')
         .gameover();
