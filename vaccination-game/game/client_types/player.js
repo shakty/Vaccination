@@ -1,4 +1,4 @@
-**
+/**
  * # Player type implementation of the game stages
  * Copyright(c) 2020 KLC <->
  * MIT Licensed
@@ -555,6 +555,64 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
 
+    stager.extendStep('health', {
+
+      cb: function() {
+        W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
+        W.cssRule('.choicetable-left, .choicetable-right ' +
+                  '{ width: 200px !important; }');
+        parent.scrollTo(0,0);
+    },
+
+    widget: {
+        name: 'ChoiceManager',
+        ref: 'health',
+        options: {
+            id: "health",
+            mainText: 'A few more questions and we are done.',
+            forms: [
+                {
+                    name: 'Slider',
+                    id: 'Perception',
+                    mainText: "On a scale of 1 to 10, how healthy do you consider yourself?",
+                    min: 1,
+                    max: 10,
+                    initialValue: 5,
+                    displayValue: TRUE,
+                },
+                {
+                    name: 'ChoiceTable',
+                    id: 'eating',
+                    mainText: "What best describes your eating habits?",
+                        choices: [ "Fairly regular and mostly consisting of home-cooked meals.",
+                                    "Fairly regular and not consisting of home-cooked meals.",
+                                    "Not regular and mostly consisting of home-cooked meals.",
+                                    "Not regular and not consisting of home-cooked meals.",
+                                ],
+                                    shuffleItems: false,
+                                },
+                },
+                {
+                    name: 'ChoiceTable',
+                    id: 'exercises',
+                    mainText: "We define exercising as a moderate- to high-intensity " +
+                    "workout. How often do you exercise?",
+                    choices: ["Never or almost never.",
+                              "Once to three times a month.",
+                              "Once a week.",
+                              "Two to four times a week.",
+                              "Five or more times a week."],
+                              shuffleItems: false,
+                }
+              ],
+              formsOptions: {
+                requiredChoice: true,
+            },
+
+            className: 'centered'
+        }
+    }
+    });
 
 
 
@@ -569,7 +627,7 @@ stager.extendStep('risk', {
              probBomb: 0.5,
             revealProbBomb: true,
              totBoxes: 50,
-             maxBoxes: 25,
+             maxBoxes: 49,
            }
 		}
 	});
