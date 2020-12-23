@@ -60,6 +60,8 @@ Our vignettes look like this:
 
 We check for understanding after the following bits of information:
 
+### Limits and Unresolved Issues
+
 
 ### References
 
