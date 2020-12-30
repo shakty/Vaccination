@@ -6,6 +6,7 @@ Kerem Cerit, Azim Selvi, Lea Cohausz
 ### Research Question 
 Does the percentage of the population already vaccinated and the infection rate of a virus influence people regarding their decision towards vaccination?
 
+
 ### Introduction and Theory
 
 The Covid-19-pandemic and the vaccine to overcome it are on everyone's mind. Though the news of successful vaccine trials and its subsequent admission in the United States and then in the European Union were celebrated, a quite substantial percentage of the population seems to feel wary regarding the decision to get vaccinated themselves with the Süddeutsche Zeitung even dubbing it „Die Vertrauensfrage“, i.e., „The question of trust“ (Becker 2020, Charisius 2020). The question is, how willing people are to get vaccinated with a vaccine with limited long-term experience. Even people who are generally advocating vaccination seem uncertain regarding this specific situation (Becker 2020).
@@ -51,6 +52,7 @@ As is norm, we ask for a number of demographic information (such as age, gender,
 
 As already mentioned, we decided to test out hypothesis using a vignette experiment. The questionnaire is split up in several parts. After an introduction to the survey where we mention the topic and expected duration, we ask respondents for some general socio-demographic information. Then, we explain important terms - such as infection rate - to them and test their understanding to make sure that the respondents will give informed answers. Afterwards, we explain the specific scenario to them and, again, check their understanding. The participants will then be given an infection rate and a percentage of the population vaccinated and will be asked, whether they would get vaccinated. They will be given new combinations four more times and will be asked for their decision every time. We decided to give them multiple treatments - instead of just one as it is usually done - so that we do not have as high requirements relating to the number of people necessary to participate to get meaningful results and because we think that every potential effect of receiving one kind of treatment first and then the next will average out. We decided against using more than five treatments per participant so that people do not get bored and exit the survey. After they have completed this part, they will be asked why they decided the way they did, before some more control variables will be covered.
 
+
 ##### Vignettes
 
 Our vignettes look like this:
@@ -63,11 +65,18 @@ There exists a vaccine that has already proven to be effective against the vacci
 
 The first paragraph of the vignette stays the same for all treatments. Only the name of the disease varies depending on the infection rate. In the middle and last paragraph, the infection rate and the vaccinated percentage of the population is altered. 
 
+
 ##### Understanding Checks
 
 We try to make sure that we only receive serious and informed responses by including two understanding checks and a timer. The timer is set in such a way that if a person takes too long to answer a question (more than two hours) his/her answers are discarded. The understanding checks appear after we explain some basic terms and after we introduce the scenario. A participant cannot continue unless he or she answered the understanding checks correctly. Understanding checks may have the disadvantage that people feel annoyed by them, but as the quality of the answers is of great importance to us, we take this risk.
 
 We aim to prevent people from dropping out by asking potentially sensitive questions (such as the questions regarding income and health) in a hopefully also sensitive way. We hope that this is sufficient to allow people to share their information. However, by asking the questions in the way we do, the information we receive back is less detailed and clear. We believe that the risk of too many people dropping out or them feeling uncomfortable is much greater than the risk of receiving lower quality information.
+
+
+### Analysis
+
+Once we have a sufficient amount of data, we can start with the analysis. As we have a dichotomous dependent variable (vaccinate - 1, not vaccinate - 0), we choose logistic regressen as our means of analysis. Every model must include our two treatments - infection rate and percentage of the population vaccinated - as independent variables. As these are categorical variables with ordering, they will be recoded to values 1 to 3 and 1 to 5 (1 representing the smallest and 5 the largest number) respectively. Furthermore, *H1* requires a quadratic term of the percentage of vaccinated population to be able to observe the effect we expect. The control variables will also be preprocessed and added. For hypothesis 1 to be true, the variable percentage of the population vaccinated needs to be positive and significant and its squared term needs needs to be negative and significant. For *H2* to be true, the variable infection rate needs to be positive and significant. To test *H3*, we will add an interaction term of the two treatment variables to the model.
+
 
 ### Limits and Unresolved Issues
 
