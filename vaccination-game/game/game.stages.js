@@ -13,7 +13,7 @@ module.exports = function(stager, settings) {
 
     stager
         .next('introduction')
-        .next('desease')
+        .next('disease')
         .next('treat')
         .next('quiz')
         .repeat('game', settings.ROUNDS)
