@@ -154,7 +154,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     //    }
   //    });
 
-      stager.extendStep('desease', {
+      stager.extendStep('disease', {
               frame: 'disease.htm',
               widget: {
                   name: 'ChoiceManager',
