@@ -160,12 +160,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   //    });
 
       stager.extendStep('disease', {
-<<<<<<< HEAD
+
               init: function() {
               node.game.visualTimer.hide();
               },
-=======
->>>>>>> c8fa9c020bb50def023ef78aae8872e34268d856
               frame: 'disease.htm',
               widget: {
                   name: 'ChoiceManager',
