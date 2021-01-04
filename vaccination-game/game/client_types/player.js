@@ -81,6 +81,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 curStage.step = curStage.step-1;
                 node.game.gotoStep(curStage);
             }
+          }
 
         // No need to show the wait for other players screen in single-player
         // games.
@@ -91,6 +92,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('introduction', {
+
+            init: function() {
+            node.game.visualTimer.show();
+            },
             frame: 'introduction.htm',
             cb: function() {
             var s;
@@ -106,7 +111,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
 
-    //stager.extendStep('desease', {
+    //stager.extendStep('disease', {
       //    frame: 'disease.htm',
       //    cb: function() {
       //    var options;
@@ -154,7 +159,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     //    }
   //    });
 
-      stager.extendStep('desease', {
+      stager.extendStep('disease', {
+              init: function() {
+              node.game.visualTimer.hide();
+              },
               frame: 'disease.htm',
               widget: {
                   name: 'ChoiceManager',
@@ -240,6 +248,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('vaccination', {
+      init: function() {
+      node.game.visualTimer.hide();
+      node.game.visualRound.show();
+      },
         frame: 'popVac.htm',
         cb: function() {
 
@@ -265,51 +277,102 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             mainText: ' Will you vaccinate? ' ,
             choices: [ 'Vaccinate', 'Not Vaccinate' ],
             requiredChoice: true,
-            shuffleChoices: true,
             panel: false,
             title: false
           }
         },
         done: function(values) {
+
+          var s;
+          var r;
+
+
+          s = node.game.settings;
+          r = node.game.getRound();
+
             return {
-                vaccinate: values.value === 'Vaccinate'
+                vaccinate: values.value === 'Vaccinate',
+                treatment: s.treat,
+                poprate: s.popRate[r-1]
             };
         }
     });
 
     stager.extendStep('response', {
+
         frame: 'vac.htm',
         cb: function() {
+
+          var s;
+          var r;
+          s = node.game.settings;
+          r = node.game.getRound();
+
+          // Replace variables in the instructions.
+          W.setInnerHTML('popRate', s.popRate[r-1]);
             // Ask for the outcome to server.
-            node.get('decision', function(data) {
+            node.get('vaccination', function(data) {
                 // Display information to screen.
                 W.setInnerHTML('decision', data.vaccinate ?
-                    'vaccinate' : 'not vaccinate');
+                    'to vaccinate' : 'not to vaccinate');
 
             });
+        },
+        timeup: function() {
+            node.done();
         }
     });
 
     stager.extendStep('opend', {
+      frame: 'opend.htm',
+      init: function() {
+      node.game.visualTimer.hide();
+      },
       cb: function() {
-        W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
-        W.cssRule('.choicetable-left, .choicetable-right ' +
-                  '{ width: 200px !important; }');
-        parent.scrollTo(0,0);
+
+        var s;
+
+        s = node.game.settings;
+
+        node.get('decisions', function(data) {
+            // Display information to screen.
+
+
+            W.setInnerHTML('decision1', data.decisions[0] ?
+                'to vaccinate' : 'not to vaccinate');
+            W.setInnerHTML('decision2', data.decisions[1] ?
+                'to vaccinate' : 'not to vaccinate');
+            W.setInnerHTML('decision3', data.decisions[2] ?
+                'to vaccinate' : 'not to vaccinate');
+            W.setInnerHTML('decision4', data.decisions[3] ?
+                'to vaccinate' : 'not to vaccinate');
+            W.setInnerHTML('decision5', data.decisions[4] ?
+                'to vaccinate' : 'not to vaccinate');
+
+            W.setInnerHTML('popRate1', s.popRate[0]);
+            W.setInnerHTML('popRate2', s.popRate[1]);
+            W.setInnerHTML('popRate3', s.popRate[2]);
+            W.setInnerHTML('popRate4', s.popRate[3]);
+            W.setInnerHTML('popRate5', s.popRate[4]);
+
+        });
+
     },
         widget: {
         name: 'Feedback',
         options: {
             title: false,
             panel: false,
-            mainText: 'Can you briefly explain why you make this decision ? <br> <br>',
+            mainText: 'Can you briefly explain why you make these decisions ?',
             sent: 'send',
             id: 'opend',
-            requiredChoice: true,
             rows: 5,
             showSubmit: false,
-            width: "100%"
-        }
+            width: "100%",
+            minChars: 50,
+            requiredChoice: true
+        },
+
     }
     });
 
@@ -487,7 +550,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     },
 
     widget: {
-        name: 'ChoiceTable',
+        name: 'ChoiceManager',
         ref: 'poli',
         options: {
             id: "pol",
@@ -513,8 +576,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 {
                     name: 'ChoiceTableGroup',
                     id: 'confidence',
-                  options:  {
-                    id: 'confidence',
                     mainText: "I am going to name a number of organizations." +
                     " For each one, could you tell me how much confidence" +
                     " you have in them?",
@@ -533,7 +594,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                                     left: 'Lowest',
                                     right: 'Highest'
                                 },
-                },
                 {
                     name: 'ChoiceTable',
                     id: 'libcons',
@@ -552,6 +612,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             className: 'centered'
         }
     }
+
     });
 
 
@@ -578,7 +639,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     min: 1,
                     max: 10,
                     initialValue: 5,
-                    displayValue: TRUE,
+                    displayValue: true
                 },
                 {
                     name: 'ChoiceTable',
@@ -591,7 +652,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                                 ],
                                     shuffleItems: false,
                                 },
-                },
                 {
                     name: 'ChoiceTable',
                     id: 'exercises',

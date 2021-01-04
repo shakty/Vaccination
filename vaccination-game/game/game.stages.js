@@ -13,7 +13,7 @@ module.exports = function(stager, settings) {
 
     stager
         .next('introduction')
-        .next('desease')
+        .next('disease')
         .next('treat')
         .next('quiz')
         .repeat('game', settings.ROUNDS)
@@ -22,14 +22,14 @@ module.exports = function(stager, settings) {
         .next('opend')
         .next('demographics')
         .next('politics')
-        .next("health")
+        .next('health')
         .next('risk')
         .next('end')
         .gameover();
 
     // Modify the stager to skip one stage.
      //stager.skip('instructions');
-     //stager.skip('desease');
+     //stager.skip('disease');
      //stager.skip('quiz');
      //stager.skip('guess');
     // stager.skip('results');
