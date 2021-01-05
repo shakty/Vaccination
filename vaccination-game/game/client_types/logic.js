@@ -48,8 +48,43 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             keepUpdated: true
         });
 
+        memory.view('gender').save('demo1.csv', {
+            header: [
+                'session', 'player', 'gender','othergender','agegroup','maritalStatus',
+                'education','countryOfOrigin','income','occupation'
+            ],
 
-        
+            keepUpdated: true
+        });
+
+        memory.view('communityService').save('pols.csv', {
+            header: [
+                'session', 'player', 'communityService', 'confGovernment',
+                'confPolParties', 'confParliament' , 'confCompanies', 'libCons'
+            ],
+
+            keepUpdated: true
+        });
+
+        memory.view('perception').save('health.csv', {
+            header: [
+                'session', 'player', 'perception', 'eating','exercises'
+            ],
+
+            keepUpdated: true
+        });
+
+        memory.view('risk').save('risk.csv', {
+            header: [
+                'session', 'player','risk', 'totalMove'
+            ],
+
+            keepUpdated: true
+        });
+
+
+
+
 
 
         node.on('get.vaccination', function(msg) {
@@ -67,6 +102,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           let item4 = memory.stage['5.1.4'].last();
           let item5 = memory.stage['5.1.5'].last();
 
+        gameRoom.updateWin(node.game.pl.first().id, settings.COINS);
+
 
           return {
             decisions: [item1.vaccinate,item2.vaccinate,item3.vaccinate,
@@ -74,6 +111,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
           };
         });
+
+
+
+
 
         node.on.data('done', function() {
                 // Select all 'done' items and save its time.
@@ -85,10 +126,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     append: true
                 });
 
+                let item = memory.stage['10.1.1'].last();
 
-                memory.select('value').save('value.json');
+                gameRoom.updateWin(node.game.pl.first().id,item.reward);
 
                 memory.select('done').save('memory_all.json');
+
+                gameRoom.computeBonus();
 
         });
 
@@ -98,6 +142,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.setOnGameOver(function() {
+
+
 
     });
 };

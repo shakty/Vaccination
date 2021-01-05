@@ -39,7 +39,7 @@ module.exports = {
     ROUNDS: 5,
 
     // Number of coins available each round.
-    COINS: 10,
+    COINS: 1,
 
     // Exchange rate coins to dollars.
     EXCHANGE_RATE: 1,

@@ -105,7 +105,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             s = node.game.settings;
             // Replace variables in the instructions.
             W.setInnerHTML('coins', s.COINS);
-            W.setInnerHTML('exchange-rate', (s.COINS * s.EXCHANGE_RATE));
+            W.setInnerHTML('exchange-rate', (s.EXCHANGE_RATE));
         }
         });
 
@@ -160,10 +160,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   //    });
 
       stager.extendStep('disease', {
-
               init: function() {
               node.game.visualTimer.hide();
               },
+
               frame: 'disease.htm',
               widget: {
                   name: 'ChoiceManager',
@@ -173,10 +173,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                           {
                               name: 'ChoiceTable',
                               id: 'infectionRate',
-                              mainText: '<br>What does an infection rate of 5 mean?  <br><br>',
-                              choices: [ "There are 5 infected people.",
-                              "Every infected person infects 5 others on average.",
-                              "5% of the population are infected."],
+                              mainText: '<br>What does an infection rate of X mean?  <br><br>',
+                              choices: [ "There are X infected people.",
+                              "Every infected person infects X others on average.",
+                              "X% of the population are infected."],
                               correctChoice: 1
                           },
                       ],
@@ -461,7 +461,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 },
                 {
                     name: "ChoiceTable",
-                    id: "Country of Origin",
+                    id: "CountryofOrigin",
                     mainText: "Where were you born?",
                     choices: [
                         "East Asia",
@@ -537,6 +537,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             className: 'centered'
         }
+    },
+    done: function(values) {
+
+        return {
+            gender: values.forms.gender.value ,
+            othergender: values.forms.othergender.value,
+            agegroup: values.forms.agegroup.value,
+            maritalStatus: values.forms.MaritalStatus.value,
+            education: values.forms.Education.value,
+            countryOfOrigin: values.forms.CountryofOrigin.value,
+            income: values.forms.Income.value,
+            occupation: values.forms.Occupation.value
+        };
     }
   });
 
@@ -559,7 +572,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             forms: [
                 {
                     name: 'ChoiceTable',
-                    id: 'Community Service',
+                    id: 'CommunityService',
                     mainText: "Have you been a volunteer in the last 12 months"+
                     " for any social or community service and if yes," +
                     " how often have you carried out this volunteering " +
@@ -612,6 +625,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             className: 'centered'
         }
+    },
+    done: function(values) {
+
+        return {
+            communityService: values.forms.CommunityService.value ,
+            confGovernment: values.forms.confidence.items['The government (in your nation’s capital)'].value,
+            confPolParties: values.forms.confidence.items['Political Parties'].value,
+            confParliament: values.forms.confidence.items.Parliament.value,
+            confCompanies: values.forms.confidence.items['Major Companies'].value,
+            libCons: values.forms.libcons.value,
+
+        };
     }
 
     });
@@ -672,6 +697,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             className: 'centered'
         }
+    },
+    done: function(values) {
+
+        return {
+            perception: values.forms.Perception.value ,
+            eating: values.forms.eating.value,
+            exercises: values.forms.exercises.value
+        };
     }
     });
 
@@ -690,7 +723,15 @@ stager.extendStep('risk', {
              totBoxes: 50,
              maxBoxes: 49,
            }
-		}
+		},
+    done: function(values) {
+
+        return {
+            risk: values.value ,
+            totalMove: values.totalMove,
+            reward: values.reward
+        };
+    }
 	});
 
 //      risk.getValues();
