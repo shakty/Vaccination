@@ -30,10 +30,6 @@ Furthermore, in accordance with Streefland (2001) we assume that an increased ri
 
 **H2:** If the infection rate is high, more people will get vaccinated.
 
-We also believe, the two aspects - infection rate and populated vaccination percentage - interact, i.e., we argue that the negative effect of a high percentage of people already vaccinated is even more pronounced when the perceived risk is low. Therefore:
-
-**H3:** If the percentage of vaccinated population is high and the infection rate is low, less people will decide in favor of vaccination.
-
 To test the above hypotheses, we will conduct a vignette online experiment varying the two independent variables.
 
 
@@ -75,7 +71,7 @@ We aim to prevent people from dropping out by asking potentially sensitive quest
 
 ### Analysis
 
-Once we have a sufficient amount of data, we can start with the analysis. As we have a dichotomous dependent variable (vaccinate - 1, not vaccinate - 0), we choose logistic regressen as our means of analysis. Every model must include our two treatments - infection rate and percentage of the population vaccinated - as independent variables. As these are categorical variables with ordering, they will be recoded to values 1 to 3 and 1 to 5 (1 representing the smallest and 5 the largest number) respectively. Furthermore, *H1* requires a quadratic term of the percentage of vaccinated population to be able to observe the effect we expect. The control variables will also be preprocessed and added. For hypothesis 1 to be true, the variable percentage of the population vaccinated needs to be positive and significant and its squared term needs needs to be negative and significant. For *H2* to be true, the variable infection rate needs to be positive and significant. To test *H3*, we will add an interaction term of the two treatment variables to the model.
+Once we have a sufficient amount of data, we can start with the analysis. As we have a dichotomous dependent variable (vaccinate - 1, not vaccinate - 0), we choose logistic regressen as our means of analysis. Every model must include our two treatments - infection rate and percentage of the population vaccinated - as independent variables. As these are categorical variables with ordering, they will be recoded to values 1 to 3 and 1 to 5 (1 representing the smallest and 5 the largest number) respectively. Furthermore, *H1* requires a quadratic term of the percentage of vaccinated population to be able to observe the effect we expect. The control variables will also be preprocessed and added. For hypothesis 1 to be true, the variable percentage of the population vaccinated needs to be positive and significant and its squared term needs needs to be negative and significant. For *H2* to be true, the variable infection rate needs to be positive and significant.
 
 
 ### Limits and Unresolved Issues
