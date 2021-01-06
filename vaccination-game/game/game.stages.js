@@ -27,18 +27,20 @@ module.exports = function(stager, settings) {
         .next('end')
         .gameover();
 
-    // Modify the stager to skip one stage.
-     //stager.skip('instructions');
-     //stager.skip('disease');
-     //stager.skip('quiz');
-     //stager.skip('guess');
-    // stager.skip('results');
-    //stager.skip('demographics');
-    // stager.skip('politics');
-    // stager.skip('risk');
-    // stager.skip('end')
+        // Modify the stager to skip one stage.
+        //stager.skip('instructions');
+        //stager.skip('disease');
+        //stager.skip('treat');
+        //stager.skip('quiz');
+        //stager.skip('game');
+        //stager.skip('opend');
+        //stager.skip('demographics');
+        // stager.skip('politics');
+        // stager.skip('health');
+        // stager.skip('risk');
+        // stager.skip('end')
 
-    // To skip a step within a stage use:
-    // stager.skip('stageName', 'stepName');
-    // Notice: here all stages have just one step.
+        // To skip a step within a stage use:
+        // stager.skip('stageName', 'stepName');
+        // Notice: here all stages have just one step.
 };
