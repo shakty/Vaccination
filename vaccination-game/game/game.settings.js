@@ -29,12 +29,8 @@ module.exports = {
      * used to initialize the game timer for the step.
      */
     TIMER: {
-      instructions: 50000,
-      treat: 50000,
-      quiz: 50000,
-      demographics: 50000,
-      politics: 50000,
-      risk: 50000
+      introduction: 50000,
+      response: 10000
     },
 
     // # Game specific properties
@@ -49,7 +45,7 @@ module.exports = {
     EXCHANGE_RATE: 1,
 
     // Rate of Vaccinated population.
-    popRate:["<b>5%<b>", "<b>23%<b>", "<b>51%<b>", "<b>72%<b>", "<b>90%<b>"],
+    popRate:[5, 23, 51, 72, 90],
 
     // # Treatments definition.
 
@@ -63,26 +59,31 @@ module.exports = {
 
         groupA: {
             description: "Not mention infection rate",
-            scenario: "groupA.htm"
+            scenario: "groupA.htm",
+            treat:"A"
 
         },
 
         groupB: {
             description: "Infection rate 1",
             infectRate: 1,
-            scenario: "groupB.htm"
+            scenario: "groupB.htm",
+            treat:"B"
+
         },
 
         groupC: {
             description: "Infection rate 5",
             infectRate: 5,
-            scenario: "groupC.htm"
+            scenario: "groupC.htm",
+            treat:"C"
         },
 
         groupD: {
             description: "Infection rate 10",
             infectRate: 10,
-            scenario: "groupD.htm"
+            scenario: "groupD.htm",
+            treat:"D"
         }
 
 

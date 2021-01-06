@@ -25,11 +25,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.setOnInit(function() {
 
-        // Feedback.
-        memory.view('feedback').save('feedback.csv', {
-            header: [ 'time', 'timestamp', 'player', 'feedback' ],
-            keepUpdated: true
-        });
+
+
+          memory.view('feedback').save('feedback.csv', {
+              header: [ 'time', 'timestamp', 'player','stage', 'feedback' ],
+              keepUpdated: true
+          });
 
         // Email.
         memory.view('email').save('email.csv', {
@@ -37,47 +38,112 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             keepUpdated: true
         });
 
-        // Win.
-        memory.view('decision').save('vaccination.csv', {
+
+
+        memory.view('vaccinate').save('vaccination.csv', {
             header: [
-                'session', 'player', 'round', 'vaccination',
+                'session', 'player', 'round', 'vaccinate','treatment','poprate'
             ],
+
             keepUpdated: true
         });
 
-        // Update player's guess with information if he or she won.
+        memory.view('gender').save('demo1.csv', {
+            header: [
+                'session', 'player', 'gender','othergender','agegroup','maritalStatus',
+                'education','countryOfOrigin','income','occupation'
+            ],
 
-        node.on('get.decision', function(msg) {
+            keepUpdated: true
+        });
+
+        memory.view('communityService').save('pols.csv', {
+            header: [
+                'session', 'player', 'communityService', 'confGovernment',
+                'confPolParties', 'confParliament' , 'confCompanies', 'libCons'
+            ],
+
+            keepUpdated: true
+        });
+
+        memory.view('perception').save('health.csv', {
+            header: [
+                'session', 'player', 'perception', 'eating','exercises'
+            ],
+
+            keepUpdated: true
+        });
+
+        memory.view('risk').save('risk.csv', {
+            header: [
+                'session', 'player','risk', 'totalMove'
+            ],
+
+            keepUpdated: true
+        });
+
+
+
+
+
+
+        node.on('get.vaccination', function(msg) {
             let item = memory.player[msg.from].last();
             return {
                 vaccinate: item.vaccinate
             };
         });
 
-        node.on.data('done', function(msg) {
+        node.on('get.decisions',function() {
 
-            let id = msg.from;
-            let step = node.game.getStepId(msg.stage);
+          let item1 = memory.stage['5.1.1'].last();
+          let item2 = memory.stage['5.1.2'].last();
+          let item3 = memory.stage['5.1.3'].last();
+          let item4 = memory.stage['5.1.4'].last();
+          let item5 = memory.stage['5.1.5'].last();
 
-            if (step === 'opend' &&
-                msg.stage.round === settings.ROUNDS) {
+        gameRoom.updateWin(node.game.pl.first().id, settings.COINS);
 
-                
 
-                let db = memory.player[id];
+          return {
+            decisions: [item1.vaccinate,item2.vaccinate,item3.vaccinate,
+              item4.vaccinate,item5.vaccinate]
+
+          };
+        });
+
+
+
+
+
+        node.on.data('done', function() {
                 // Select all 'done' items and save its time.
-                db.select('done').save('times.csv', {
+                memory.select('done').save('times.csv', {
                     header: [
                         'session', 'player', 'stage', 'step', 'round',
-                        'time', 'timeup'
+                        'time'
                     ],
                     append: true
                 });
-            }
+
+                let item = memory.stage['10.1.1'].last();
+
+                gameRoom.updateWin(node.game.pl.first().id,item.reward);
+
+                memory.select('done').save('memory_all.json');
+
+                gameRoom.computeBonus();
+
         });
+
+
+
+
     });
 
     stager.setOnGameOver(function() {
-        // Something to do.
+
+
+
     });
 };
