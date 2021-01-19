@@ -24,6 +24,7 @@ module.exports = function(stager, settings) {
         .next('politics')
         .next('health')
         .next('risk')
+        .next('feedback')
         .next('end')
         .gameover();
 

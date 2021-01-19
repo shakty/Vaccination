@@ -126,8 +126,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           append: true
         });
 
-        // Update win.
-        if (memory.stage['10.1.1']) {
+        // Risk stage is 10, then there is feedback.
+        if (memory.stage['11.1.1']) {
 
           // Coins for the questions.
           gameRoom.updateWin(node.game.pl.first().id, settings.COINS);
@@ -140,12 +140,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           // Compute total win.
           gameRoom.computeBonus();
 
+          // Select all 'done' items and save everything as json.
+          memory.select('done').save('memory_all.json');
+
         }
-
-        // Select all 'done' items and save everything as json.
-        memory.select('done').save('memory_all.json');
-
-
 
       });
 
