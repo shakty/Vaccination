@@ -805,10 +805,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
       stager.extendStep('end', {
-        widget: 'EndScreen',
-        options: {
-            feedback: false,
-            email: false
+        widget: {
+            name: 'EndScreen',
+            options: {
+                feedback: false,
+                email: false
+            }
         },
         init: function() {
           node.say('end');
