@@ -209,6 +209,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   });
 
   stager.extendStep('vaccination', {
+    name: 'Your Decision',
     init: function() {
 
       node.game.backButton.hide();
@@ -548,8 +549,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               " how often have you carried out this volunteering " +
               "within the past 12 months?",
               choices: [
-                "I have not volunteered in the last 12 months",
-                "Very seldom",
+                "Never",
+                "Once",
                 "A couple of times last year",
                 "One or two days a month",
                 "One day a week or more",
@@ -565,9 +566,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               " you have in them?",
               items: [
                 'The national/federal government',
-                'Political Parties',
+                'Political parties',
                 'Parliament',
-                'Major Companies'
+                'Major Corporations'
               ],
                 choices: [
                     "None at all",
@@ -606,10 +607,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             // With done, return related information.
             return {
               communityService: values.forms.CommunityService.value ,
-              confGov: vfc.items['The government (in your nation’s capital)'].value,
+              confGov: vfc.items['The national/federal government'].value,
               confPolParties: vfc.items['Political Parties'].value,
               confParliament: vfc.items.Parliament.value,
-              confCompanies: vfc.items['Major Companies'].value,
+              confCompanies: vfc.items['Major Corporations'].value,
               libCons: values.forms.libcons.value,
 
             };
