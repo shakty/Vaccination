@@ -137,18 +137,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
           gameRoom.updateWin(node.game.pl.first().id,item.reward);
 
+          // Compute total win.
+          gameRoom.computeBonus();
+
         }
 
         // Select all 'done' items and save everything as json.
         memory.select('done').save('memory_all.json');
 
-        // Compute total win.
-        gameRoom.computeBonus();
+
 
       });
 
 
-      
+
 
     });
 
