@@ -39,10 +39,10 @@ module.exports = {
     ROUNDS: 5,
 
     // Number of coins available each round.
-    COINS: 1.5,
+    COINS: 1,
 
     // Minutes to complete the task.
-    COMPLETE_TIME: 10,
+    COMPLETE_TIME: "5-10",
 
     // Exchange rate coins to dollars.
     EXCHANGE_RATE: 1,

@@ -32,11 +32,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       keepUpdated: true
     });
 
-    // Email.
-    memory.view('email').save('email.csv', {
-      header: [ 'timestamp', 'player', 'email' ],
-      keepUpdated: true
-    });
+    // // Email.
+    // memory.view('email').save('email.csv', {
+    //   header: [ 'timestamp', 'player', 'email' ],
+    //   keepUpdated: true
+    // });
 
 
     // Vaccination.
@@ -44,7 +44,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       header: [
         'session', 'player', 'round', 'vaccinate','treatment','poprate'
       ],
-
       keepUpdated: true
     });
 
@@ -55,7 +54,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         'maritalStatus',
         'education','countryOfOrigin','income','occupation'
       ],
-
       keepUpdated: true
     });
 
@@ -65,7 +63,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         'session', 'player', 'communityService', 'confGov',
         'confPolParties', 'confParliament' , 'confCompanies', 'libCons'
       ],
-
       keepUpdated: true
     });
 
@@ -74,7 +71,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       header: [
         'session', 'player', 'perception', 'eating','exercises'
       ],
-
       keepUpdated: true
     });
 
@@ -84,7 +80,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       header: [
         'session', 'player','risk', 'totalMove'
       ],
+      keepUpdated: true
+    });
 
+    // Risk.
+    memory.view('covid').save('covid.csv', {
+      header: [
+        'session', 'player','covid'
+      ],
       keepUpdated: true
     });
 
@@ -127,15 +130,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         });
 
         // Risk stage is 10, then there is feedback.
-        if (memory.stage['11.1.1']) {
+        if (memory.stage['10.1.1']) {
+
+            // Bonus from the RiskGauge.
+            let item = memory.stage['10.1.1'].last();
 
           // Coins for the questions.
-          gameRoom.updateWin(node.game.pl.first().id, settings.COINS);
-
-          // Bonus from the RiskGauge.
-          let item = memory.stage['10.1.1'].last();
-
-          gameRoom.updateWin(node.game.pl.first().id,item.reward);
+          gameRoom.updateWin(node.game.pl.first().id,
+                             (settings.COINS + item.reward));
 
           // Compute total win.
           gameRoom.computeBonus();

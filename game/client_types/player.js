@@ -752,6 +752,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             revealProbBomb: true,
             totBoxes: 50,
             maxBoxes: 49,
+            required: true
           }
         },
         done: function(values) {
@@ -769,9 +770,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       stager.extendStep('feedback', {
           widget: {
               name: 'Feedback',
-              root: 'container',
               options: {
-                  className: 'centered',
+                  required: true,
                   title: false,
                   panel: false,
                   minChars: 50,
@@ -805,6 +805,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
       stager.extendStep('end', {
         widget: 'EndScreen',
+        options: {
+            feedback: false,
+            email: false
+        },
         init: function() {
           node.game.visualTimer.destroy();
           node.game.doneButton.destroy();
