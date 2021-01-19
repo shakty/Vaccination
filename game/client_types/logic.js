@@ -129,11 +129,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           append: true
         });
 
-        // Risk stage is 10, then there is feedback.
-        if (memory.stage['10.1.1']) {
+        // Risk stage is 11, then there is feedback.
+        if (memory.stage['11.1.1']) {
 
             // Bonus from the RiskGauge.
-            let item = memory.stage['10.1.1'].last();
+            let item = memory.stage['11.1.1'].last();
+
+            debugger
 
           // Coins for the questions.
           gameRoom.updateWin(node.game.pl.first().id,

@@ -23,6 +23,7 @@ module.exports = function(stager, settings) {
         .next('demographics')
         .next('politics')
         .next('health')
+        .next('covid')
         .next('risk')
         .next('feedback')
         .next('end')

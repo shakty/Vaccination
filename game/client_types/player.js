@@ -638,8 +638,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               forms: [
                 {
                   name: 'Slider',
-                  id: 'Perception',
-                  mainText: "On a scale of 1 to 10, how healthy do you" +
+                  id: 'perception',
+                  mainText: "On a scale of 1 to 10, where 1 means not at all and 10 means very healthy, how healthy do you " +
                   "consider yourself?",
                   min: 1,
                   max: 10,
@@ -686,7 +686,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
           // With done, return related information.
           return {
-            perception: values.forms.Perception.value ,
+            perception: values.forms.perception.value ,
             eating: values.forms.eating.value,
             exercises: values.forms.exercises.value
           };
@@ -694,7 +694,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       });
 
 
-      stager.extendStep('health', {
+      stager.extendStep('covid', {
 
         cb: function() {
           W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
@@ -707,13 +707,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           name: 'ChoiceManager',
           ref: 'health',
           options: {
-            id: "health",
+            id: "covid",
             mainText: 'Please answer a last <em>optional</em> question about your experience with Covid-19 virus.',
             hint: 'If you are uncomfortable answering the question below, please select "Prefer not to answer."',
             forms: [
               {
                 name: 'ChoiceTable',
-                id: 'covid',
+                id: 'knowcovid',
                 mainText: "Do you know somebody close to you (including yourself) who tested positive to the Covid-19 virus?",
                 choices: [ "Yes", "No", "Prefer not to answer" ],
               shuffleItems: false,
@@ -732,7 +732,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // With done, return related information.
         return {
-          covidYou: values.forms.covid.value,
+          covidYou: values.forms.knowcovid.value,
         };
       }
     });
