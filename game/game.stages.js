@@ -30,7 +30,7 @@ module.exports = function(stager, settings) {
         .gameover();
 
         // Modify the stager to skip one stage.
-        // stager.skip('instructions');
+        // stager.skip('introduction');
         // stager.skip('disease');
         // stager.skip('treat');
         // stager.skip('quiz');

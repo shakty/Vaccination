@@ -639,7 +639,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 {
                   name: 'Slider',
                   id: 'perception',
-                  mainText: "On a scale of 1 to 10, where 1 means not at all and 10 means very healthy, how healthy do you " +
+                  mainText: 'On a scale of 1 to 10, where 1 means "not at ' +
+                  'all healthy" and 10 means "very healthy," how healthy do you ' +
                   "consider yourself?",
                   min: 1,
                   max: 10,
@@ -810,6 +811,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             email: false
         },
         init: function() {
+          node.say('end');
           node.game.visualTimer.destroy();
           node.game.doneButton.destroy();
         }

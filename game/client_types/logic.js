@@ -25,6 +25,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
   stager.setOnInit(function() {
 
+      // numeric values for the risk stage.
+      this.riskStage = node.game.plot.normalizeGameStage('risk');
 
     // Feedback.
     memory.view('feedback').save('feedback.csv', {
@@ -129,36 +131,46 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           append: true
         });
 
-        // Risk stage is 11, then there is feedback.
-        if (memory.stage['11.1.1']) {
+      });
+
+    });
+
+    node.on.data('end', function(msg) {
+
+        let client = channel.registry.getClient(msg.from);
+        if (!client) return;
+
+        if (client.checkout) {
+            // Just resend bonus
+            gameRoom.computeBonus({
+                clients: [ msg.from ],
+                dump: false
+             });
+        }
+        else {
+
 
             // Bonus from the RiskGauge.
-            let item = memory.stage['11.1.1'].last();
+            let item = memory.stage[this.riskStage].last();
 
-            debugger
+            // Coins for the questions.
+            gameRoom.updateWin(msg.from, (settings.COINS + item.reward), {
+                clear: true
+            });
 
-          // Coins for the questions.
-          gameRoom.updateWin(node.game.pl.first().id,
-                             (settings.COINS + item.reward));
+            // Compute total win.
+            gameRoom.computeBonus({
+                clients: [ msg.from ]
+            });
 
-          // Compute total win.
-          gameRoom.computeBonus();
+            // Mark client checked out.
+            channel.registry.checkOut(msg.from);
 
-          // Select all 'done' items and save everything as json.
-          memory.select('done').save('memory_all.json');
+            // Select all 'done' items and save everything as json.
+            memory.select('done').save('memory_all.json');
 
         }
 
-      });
-
-
-
-
     });
 
-    stager.setOnGameOver(function() {
-
-
-
-    });
   };
