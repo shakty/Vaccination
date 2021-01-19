@@ -149,6 +149,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   // Show the treatment scenario.
   // Check settings for related scenario.
   stager.extendStep('treat', {
+    name: 'Scenario',
     frame: settings.scenario,
     init: function() {
       node.game.backButton.hide();
@@ -547,8 +548,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               " how often have you carried out this volunteering " +
               "within the past 12 months?",
               choices: [
-                "I did not volunteer in the last 12 months",
-                "Very ocassionally",
+                "I have not volunteered in the last 12 months",
+                "Very seldom",
                 "A couple of times last year",
                 "One or two days a month",
                 "One day a week or more",
@@ -563,16 +564,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               " For each one, could you tell me how much confidence" +
               " you have in them?",
               items: [
-                'The government (in your nation’s capital)',
+                'The national/federal government',
                 'Political Parties',
                 'Parliament',
                 'Major Companies'
               ],
                 choices: [
-                  "A great deal",
-                  "Quite a lot",
-                  "Not very much",
-                  "None at all",
+                    "None at all",
+                    "Not very much",
+                    "Quite a lot",
+                    "A great deal",
                   "Prefer not to say"
                 ],
                   shuffleItems: false,
