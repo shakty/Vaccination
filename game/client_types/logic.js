@@ -149,7 +149,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
         else {
 
-
             // Bonus from the RiskGauge.
             let item = memory.stage[this.riskStage].last();
 
