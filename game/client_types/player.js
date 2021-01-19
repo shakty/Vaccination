@@ -708,12 +708,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           ref: 'health',
           options: {
             id: "health",
-            mainText: 'Please answer a last em>optional</em> question about your experience with Covid-19 virus.',
+            mainText: 'Please answer a last <em>optional</em> question about your experience with Covid-19 virus.',
             hint: 'If you are uncomfortable answering the question below, please select "Prefer not to answer."',
             forms: [
               {
                 name: 'ChoiceTable',
-                id: 'covidOthers',
+                id: 'covid',
                 mainText: "Do you know somebody close to you (including yourself) who tested positive to the Covid-19 virus?",
                 choices: [ "Yes", "No", "Prefer not to answer" ],
               shuffleItems: false,
@@ -732,8 +732,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // With done, return related information.
         return {
-          covidYou: values.forms.covidYou.value,
-          covidOthers: values.forms.covidOthers.value
+          covidYou: values.forms.covid.value,
         };
       }
     });
