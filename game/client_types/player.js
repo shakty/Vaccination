@@ -331,13 +331,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       options: {
         title: false,
         panel: false,
-        mainText: 'Can you briefly explain why you make these decisions ?',
+        mainText: 'Can you briefly explain why you made these decisions?',
         sent: 'send',
         id: 'opend',
         rows: 5,
         showSubmit: false,
         width: "100%",
-        minChars: 50,
+        minChars: 150,
         requiredChoice: true
       },
 
@@ -357,7 +357,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       ref: 'demo1',
       options: {
         id: 'demo1',
-        mainText: 'Your demographics.',
+        mainText: 'Please answer now a brief survery about your demographics.',
         forms: [
           {
             name: 'ChoiceTable',
@@ -505,6 +505,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           formsOptions: {
             requiredChoice: true,
           },
+          required: true,
 
           className: 'centered'
         }
@@ -539,7 +540,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         ref: 'poli',
         options: {
           id: "pol",
-          mainText: 'A few more questions and we are done.',
+          mainText: 'Please answer a few more questions about politics.',
           forms: [
             {
               name: 'ChoiceTable',
@@ -596,7 +597,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
               formsOptions: {
                 requiredChoice: true,
               },
-
+              required: true,
               className: 'centered'
             }
           },
@@ -608,7 +609,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             return {
               communityService: values.forms.CommunityService.value ,
               confGov: vfc.items['The national/federal government'].value,
-              confPolParties: vfc.items['Political Parties'].value,
+              confPolParties: vfc.items['Political parties'].value,
               confParliament: vfc.items.Parliament.value,
               confCompanies: vfc.items['Major Corporations'].value,
               libCons: values.forms.libcons.value,
@@ -633,7 +634,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             ref: 'health',
             options: {
               id: "health",
-              mainText: 'A few more questions and we are done.',
+              mainText: 'Please answer a few questions about your life style.',
               forms: [
                 {
                   name: 'Slider',
@@ -676,6 +677,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             formsOptions: {
               requiredChoice: true,
             },
+            required: true,
 
             className: 'centered'
           }
@@ -690,6 +692,52 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
           };
         }
       });
+
+
+      stager.extendStep('health', {
+
+        cb: function() {
+          W.cssRule('.choicetable-maintext { padding-bottom: 20px; }');
+          W.cssRule('.choicetable-left, .choicetable-right ' +
+          '{ width: 200px !important; }');
+          parent.scrollTo(0,0);
+        },
+
+        widget: {
+          name: 'ChoiceManager',
+          ref: 'health',
+          options: {
+            id: "health",
+            mainText: 'Please answer a last em>optional</em> question about your experience with Covid-19 virus.',
+            hint: 'If you are uncomfortable answering the question below, please select "Prefer not to answer."',
+            forms: [
+              {
+                name: 'ChoiceTable',
+                id: 'covidOthers',
+                mainText: "Do you know somebody close to you (including yourself) who tested positive to the Covid-19 virus?",
+                choices: [ "Yes", "No", "Prefer not to answer" ],
+              shuffleItems: false,
+              },
+
+          ],
+          formsOptions: {
+            requiredChoice: true,
+          },
+          required: true,
+
+          className: 'centered'
+        }
+      },
+      done: function(values) {
+
+        // With done, return related information.
+        return {
+          covidYou: values.forms.covidYou.value,
+          covidOthers: values.forms.covidOthers.value
+        };
+      }
+    });
+
 
 
 
