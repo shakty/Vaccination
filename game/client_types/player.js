@@ -107,6 +107,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
   stager.extendStep('disease', {
+    name: 'Terminology',
     init: function() {
       // No need for the timer.
       node.game.visualTimer.hide();
@@ -200,7 +201,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // Settings here apply to all forms.
         formsOptions: {
           shuffleChoices: true
-        }
+        },
+        required: true
       }
     }
   });
