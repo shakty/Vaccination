@@ -87,7 +87,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   stager.extendStep('introduction', {
 
     init: function() {
-      node.game.visualTimer.show();
+      // node.game.visualTimer.show();
     },
     frame: 'introduction.htm',
     cb: function() {
@@ -97,8 +97,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
       // executed on the client.
       s = node.game.settings;
       // Replace variables in the instructions.
+      W.setInnerHTML('time', s.COMPLETE_TIME);
       W.setInnerHTML('coins', s.COINS);
-      W.setInnerHTML('exchange-rate', (s.EXCHANGE_RATE));
+      // W.setInnerHTML('exchange-rate', (s.EXCHANGE_RATE));
     }
   });
 
@@ -137,7 +138,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         className: 'centered',
         panel: false,
-
+        required: true
       }
     }
   });
