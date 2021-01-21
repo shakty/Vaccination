@@ -8,6 +8,9 @@
  * http://nodegame.org
  * ---
  */
+
+let localCounter = 0;
+
 module.exports = {
 
     /**
@@ -96,7 +99,11 @@ module.exports = {
      *
      * Default: undefined, random treatment
      */
-    CHOSEN_TREATMENT: "treatment_rotate",
+    CHOSEN_TREATMENT: function(treatments, roomCounter) {
+        // Experimental setting: need to use localCounter because roomCounter
+        // is constrained by the number of treatments.
+        return treatments[localCounter++ % treatments.length];
+    },
 
 
     /**
