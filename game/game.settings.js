@@ -39,7 +39,7 @@ module.exports = {
     ROUNDS: 5,
 
     // Number of coins available each round.
-    COINS: 1,
+    COINS: 1.3,
 
     // Minutes to complete the task.
     COMPLETE_TIME: "5-10",
