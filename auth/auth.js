@@ -14,9 +14,9 @@ module.exports = function(auth) {
 
     // The Auth API defines 3 callbacks:
 
-    // auth.authorization('player', authPlayers);
-    // auth.clientIdGenerator('player', idGen);
-    // auth.clientObjDecorator('player', decorateClientObj);
+    auth.authorization('player', authPlayers);
+    auth.clientIdGenerator('player', idGen);
+    auth.clientObjDecorator('player', decorateClientObj);
 
     // All of them accept a variable number of parameters.
     // The first one specifies whether they apply only to
@@ -48,10 +48,12 @@ module.exports = function(auth) {
     //         validSessionCookie: TRUE if the channel session is matched
     //      }
     //
+    // Reject connections without the PROLIFIC_ID field.
     function authPlayers(channel, info) {
-        // TRUE, means client is authorized.
+        if (!info.query.PROLIFIC_PID) return false;
         return true;
     }
+
 
     // ## Client ID generation function
     //
@@ -65,9 +67,10 @@ module.exports = function(auth) {
     // @see ServerChannel.registry.generateClientId
     //
     function idGen(channel, info) {
-        // Returns a valid client ID (string) or undefined.
-        return;
+        // Use the Prolific player Id in nodeGame.
+        return info.query.PROLIFIC_PID;
     }
+
 
     // ## Client object decoration function
     //
@@ -88,5 +91,12 @@ module.exports = function(auth) {
     //
     function decorateClientObj(clientObj, info) {
         if (info.headers) clientObj.userAgent = info.headers['user-agent'];
+
+        // PROLIFIC Exit code, same for all participants, as provided by
+        // Prolific. Make sure you show this code at the end of the experiment.
+        clientObj.ExitCode = 'MY_EXIT_CODE';
+        // Information about player ID and session (as provided by Prolific).
+        clientObj.PROLIFIC_STUDY = info.query.STUDY_ID;
+        clientObj.PROLIFIC_SESSION = info.query.SESSION_ID;
     }
 };
