@@ -11,3 +11,5 @@ node_modules
 *.swp
 Session.vim
 data
+*.bak
+codes.imported.csv
