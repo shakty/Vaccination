@@ -298,12 +298,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     cb: function() {
 
       var s;
-
       s = node.game.settings;
 
       // All decisions
       node.get('decisions', function(data) {
-
 
         // Display information to screen.
         W.setInnerHTML('decision1', data.decisions[0] ?
@@ -734,7 +732,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // With done, return related information.
         return {
-          covidYou: values.forms.knowcovid.value,
+          covid: values.forms.knowcovid.value,
         };
       }
     });
