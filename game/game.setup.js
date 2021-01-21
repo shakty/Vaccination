@@ -16,7 +16,7 @@ module.exports = function(settings, stages) {
     var setup;
     setup = {};
 
-    setup.debug = true;
+    setup.debug = false;
 
     // setup.verbosity = 1;
 
