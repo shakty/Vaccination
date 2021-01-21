@@ -290,6 +290,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
   });
 
   stager.extendStep('opend', {
+    name: "Overview",
     frame: 'opend.htm',
     init: function() {
       node.game.visualTimer.hide();
