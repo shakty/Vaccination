@@ -153,7 +153,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     frame: settings.scenario,
     init: function() {
       node.game.backButton.hide();
-    },
+    }
   });
 
 
