@@ -159,7 +159,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             // Compute total win.
             gameRoom.computeBonus({
-                clients: [ msg.from ]
+                clients: [ msg.from ],
+                append: true
+
             });
 
             // Mark client checked out.
