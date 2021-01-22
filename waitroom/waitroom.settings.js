@@ -10,6 +10,8 @@
  */
 
 let localCounter = 0;
+// Initial imbalance. We skip five times treatment A, before normal rotation.
+let skipA = 5;
 
 module.exports = {
 
@@ -102,7 +104,12 @@ module.exports = {
     CHOSEN_TREATMENT: function(treatments, roomCounter) {
         // Experimental setting: need to use localCounter because roomCounter
         // is constrained by the number of treatments.
-        return treatments[localCounter++ % treatments.length];
+        let t = treatments[localCounter++ % treatments.length];
+        if (t === "groupA" && skipA > 0) {
+            skipA--;
+            t = treatments[localCounter++ % treatments.length];
+        }
+        return t;
     },
 
 
